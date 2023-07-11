@@ -1,0 +1,7 @@
+// @use规则从其他Sass样式表加载mixins，函数和变量，并将多个样式表css组合在一起
+@use '../../../theme-chalk/index.scss';
+@include b(affix) {
+  @include m(fixed) {
+    position: fixed;
+  }
+}

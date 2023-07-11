@@ -1,0 +1,41 @@
+/*变量声明  config.scss*/
+
+$namespace: 'el' !default;
+$common-separator: '-' !default;
+$element-separator: '__' !default;
+$modifier-separator: '--' !default;
+$state-prefix: 'is-' !default;
+
+/* 混入 mixins.scss */
+
+// @mixin 指令允许我们定义一个可以在整个样式表中重复使用的样式。@include 指令可以将混入（mixin）引入到文档中
+
+// 将局部变量转换为全局变量可以添加 !global 声明
+
+// 通过 #{} 插值语句可以在选择器或属性名中使用变量
+
+// `@content`用在`mixin`里面的，当定义一个`mixin`后，并且设置了`@content`； `@include`的时候可以传入相应的内容到`mixin`里面
+
+// BEM
+@mixin b($block) {
+  $B: $namespace + $common-separator + $block !global;
+  .#{$B} {
+    @content;
+  }
+}
+
+@mixin m($modifier) {
+  $selector: &;
+  $currentSelector: '';
+  // &--success,
+  @each $unit in $modifier {
+    $currentSelector: #{$currentSelector + $selector + $modifier-separator + $unit + ','};
+  }
+
+  // 当使用 & 选择器时，就算你不想嵌套选择器，Sass也会自动嵌套。但往往很多时候，我们是不想要嵌套选择器，例如BEM
+  @at-root {
+    #{$currentSelector} {
+      @content;
+    }
+  }
+}
