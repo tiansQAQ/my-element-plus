@@ -52,7 +52,7 @@ export const useNamespace = (block, namespaceOverrides) => {
   // b() => el-tree
   const b = (blockSuffix = '') => _bem(namespace, block, blockSuffix, '', '')
 
-  // e('content') => el-tree-node__content
+  // e('content') => el-tree__content
   const e = (element) => (element ? _bem(namespace, block, '', element, '') : '')
 
   // m('success') => el-button--success
