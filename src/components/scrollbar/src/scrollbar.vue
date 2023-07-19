@@ -20,7 +20,7 @@ import { scrollbarContextKey } from './constants'
 
 import Bar from './bar.vue'
 
-const GAP = 4 // top 2 + bottom 2 of bar instance
+const GAP = 0 // top 2 + bottom 2 of bar instance
 const COMPONENT_NAME = 'ElScrollbar'
 
 defineOptions({ name: COMPONENT_NAME })
@@ -121,28 +121,36 @@ const handleScroll = () => {
 }
 
 const update = () => {
-  console.log('update')
-
   if (!wrapRef.value) return
 
   const offsetHeight = wrapRef.value.offsetHeight - GAP
 
   const offsetWidth = wrapRef.value.offsetWidth - GAP
 
+  // scrollHeight 越大，originalHeight越小 200 * 200 / 201
   const originalHeight = offsetHeight ** 2 / wrapRef.value.scrollHeight
+  console.log('originalHeight: ', originalHeight)
 
   const originalWidth = offsetWidth ** 2 / wrapRef.value.scrollWidth
+
   const height = Math.max(originalHeight, props.minSize)
 
   const width = Math.max(originalWidth, props.minSize)
 
-  // 代码计算元素原始大小与纵向和横向可用空间之间的比率，并将这些值设置为响应式变量 ratioY 和 ratioX。
-  // 计算出的原始高度 / (元素高度 - 计算出的原始高度) / (计算出的原始高度,最小20px / (元素高度 - 计算出的原始高度,最小20px ) )
+  // 原始高度 / (wrap高度 - 默认最顶端时当前的原始高度) = 原始高度所占整个高度比例
+  // 真实高度 / (wrap高度 - 默认最顶端时当前的原始高度) = 真实高度所占整个高度比例
+  // ratioY.value = 原始高度/真实高度的比例
+  // 如果originalHeight >= 20，height比例始终为1... 如果originalHeight小于20, 而height始终为minSize尺寸(默认20)
+
+  // 10 / (200 - 10)     /    (20 / (200 - 20))  = 0.25
+  // 0.05263157894736842 /    0.1111111111111111 = 0.47368421052631576
   ratioY.value = originalHeight / (offsetHeight - originalHeight) / (height / (offsetHeight - height))
 
   ratioX.value = originalWidth / (offsetWidth - originalWidth) / (width / (offsetWidth - width))
 
+  // thumb高度 199 + 0 < 200
   sizeHeight.value = height + GAP < offsetHeight ? `${height}px` : ''
+
   sizeWidth.value = width + GAP < offsetWidth ? `${width}px` : ''
 }
 
