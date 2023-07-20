@@ -1,7 +1,14 @@
 <template>
   <div>App</div>
   <el-scrollbar :height="200">
-    <div style="height: 20000px">111</div>
+    <h1>AAA</h1>
+    <h1>AAA</h1>
+    <h1>AAA</h1>
+    <h1>AAA</h1>
+    <h1>AAA</h1>
+    <h1>AAA</h1>
+    <h1>AAA</h1>
+    <h1>AAA</h1>
   </el-scrollbar>
 </template>
 
