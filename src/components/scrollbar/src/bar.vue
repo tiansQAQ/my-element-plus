@@ -1,16 +1,17 @@
 <template>
   <transition :name="ns.b('fade')">
-    <div ref="barRef" :class="[ns.e('bar'), ns.is(bar.key)]" @mousedown="clickTrackHandler">
-      <div v-show="always || visible" ref="thumb" :class="ns.e('thumb')" :style="thumbStyle" @mousedown="clickThumbHandler"></div>
+    <div v-show="always || visible" ref="barRef" :class="[ns.e('bar'), ns.is(bar.key)]" @mousedown="clickTrackHandler">
+      <div ref="thumb" :class="ns.e('thumb')" :style="thumbStyle" @mousedown="clickThumbHandler"></div>
     </div>
   </transition>
 </template>
 
 <script setup>
-import { ref, defineProps, computed, defineExpose, inject } from 'vue'
+import { ref, defineProps, computed, defineExpose, inject, toRef } from 'vue'
 const GAP = 0 // top 2 + bottom 2 of bar instance
 import { useNamespace } from '@/hooks'
 import { scrollbarContextKey } from './constants'
+import { useEventListener } from '@vueuse/core'
 
 const renderThumbStyle = ({ move, size, bar }) => {
   return { [bar.size]: size, transform: `translate${bar.axis}(${move}%)` }
@@ -58,6 +59,8 @@ const clickTrackHandler = (e) => {
 
 let cursorDown = false //  记录按下状态
 
+const visible = ref(false)
+
 // 按下滚动条，并且鼠标移动时
 const mouseMoveDocumentHandler = (e) => {
   //  如果按下状态为假，返回
@@ -90,7 +93,7 @@ const mouseUpDocumentHandler = () => {
   document.removeEventListener('mouseup', mouseUpDocumentHandler)
   //  拖拽结束，此时允许鼠标长按划过文本选中。
   document.onselectstart = null
-  console.log('mouseUpDocumentHandler')
+  visible.value = false
 }
 
 const startDrag = (e) => {
@@ -122,6 +125,19 @@ const clickThumbHandler = (e) => {
   // 滑块的高度 -  (点击滑块距离顶部的位置 - 滑块元素距离顶部的位置)
   thumbState[bar.value.axis] = e.currentTarget[bar.value.offset] - (e[bar.value.client] - e.currentTarget.getBoundingClientRect()[bar.value.direction])
 }
+
+// visible show and false
+const mouseMoveScrollbarHandler = () => {
+  visible.value = !!props.size
+}
+
+const mouseLeaveScrollbarHandler = () => {
+  visible.value = cursorDown
+}
+
+useEventListener(toRef(scrollbar, 'scrollbarRef'), 'mousemove', mouseMoveScrollbarHandler)
+
+useEventListener(toRef(scrollbar, 'scrollbarRef'), 'mouseleave', mouseLeaveScrollbarHandler)
 
 defineExpose({
   // handleScroll

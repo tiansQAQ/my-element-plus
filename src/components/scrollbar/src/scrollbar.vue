@@ -7,7 +7,7 @@
       </component>
     </div>
     <template v-if="!native">
-      <bar vertical :size="sizeHeight" :move="moveY" :always="true" />
+      <bar vertical :size="sizeHeight" :move="moveY" :always="always" />
     </template>
   </div>
 </template>
@@ -86,7 +86,7 @@ const sizeHeight = ref('0')
 
 const moveY = ref(0)
 
-provide(scrollbarContextKey, reactive({ wrapRef }))
+provide(scrollbarContextKey, reactive({ wrapRef, scrollbarRef }))
 
 // wrap class
 const wrapKls = computed(() => {
@@ -222,4 +222,5 @@ defineExpose({
 
 <style lang="scss">
 @import '../style/scrollbar.scss';
+@import '../../../theme-chalk/common/transition.scss';
 </style>

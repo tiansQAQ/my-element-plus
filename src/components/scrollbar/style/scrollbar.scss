@@ -61,3 +61,18 @@
     opacity: var(#{getCssVarName('scrollbar-opacity')}, map.get($scrollbar, 'opacity'));
   }
 }
+
+.#{$namespace}-scrollbar-fade {
+  &-enter-active {
+    transition: opacity 340ms ease-out;
+  }
+
+  &-leave-active {
+    transition: opacity 120ms ease-out;
+  }
+
+  &-enter-from,
+  &-leave-active {
+    opacity: 0;
+  }
+}

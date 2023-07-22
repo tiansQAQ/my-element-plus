@@ -1,0 +1,9 @@
+@use '../index.scss';
+.#{$namespace}-fade-in-enter-active,
+.#{$namespace}-fade-in-leave-active {
+  transition: all getCssVar('transition-duration') cubic-bezier(0.55, 0, 0.1, 1);
+}
+.#{$namespace}-fade-in-enter-from,
+.#{$namespace}-fade-in-leave-active {
+  opacity: 0;
+}
