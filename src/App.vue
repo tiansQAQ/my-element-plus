@@ -1,15 +1,5 @@
 <template>
-  <div>App</div>
-  <el-scrollbar :height="200">
-    <h1>AAA</h1>
-    <h1>AAA</h1>
-    <h1>AAA</h1>
-    <h1>AAA</h1>
-    <h1>AAA</h1>
-    <h1>AAA</h1>
-    <h1>AAA</h1>
-    <h1>AAA</h1>
-  </el-scrollbar>
+  <el-icon class="el-icon-loading" :size="20" color="#409EFC"><Loading /></el-icon>
 </template>
 
 <script setup></script>

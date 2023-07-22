@@ -4,7 +4,12 @@ import App from './App.vue'
 import myAffix from './components/affix'
 import myCard from './components/card'
 import myScrollbar from './components/scrollbar'
+import icon from './components/icon'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 const app = createApp(App)
-app.use(myAffix).use(myCard).use(myScrollbar)
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
+}
+app.use(myAffix).use(myCard).use(myScrollbar).use(icon)
 app.mount('#app')
