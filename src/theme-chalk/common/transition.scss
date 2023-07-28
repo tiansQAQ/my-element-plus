@@ -1,4 +1,5 @@
-@use '../index.scss';
+@use '../mixins/config.scss' as *;
+@use '../mixins/function.scss' as *;
 .#{$namespace}-fade-in-enter-active,
 .#{$namespace}-fade-in-leave-active {
   transition: all getCssVar('transition-duration') cubic-bezier(0.55, 0, 0.1, 1);

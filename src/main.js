@@ -5,11 +5,12 @@ import myAffix from './components/affix'
 import myCard from './components/card'
 import myScrollbar from './components/scrollbar'
 import icon from './components/icon'
+import myButton from './components/button'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
-app.use(myAffix).use(myCard).use(myScrollbar).use(icon)
+app.use(myAffix).use(myCard).use(myScrollbar).use(icon).use(myButton)
 app.mount('#app')

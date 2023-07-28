@@ -1,4 +1,5 @@
-@use '../../../theme-chalk/index.scss';
+@use './mixins/config.scss' as *;
+@use './mixins/mixins.scss' as *;
 
 .#{$namespace}-icon-loading {
   animation: rotating 2s linear infinite;

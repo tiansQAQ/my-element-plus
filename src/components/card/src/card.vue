@@ -31,7 +31,3 @@ defineProps({
 })
 const ns = useNamespace('card')
 </script>
-
-<style lang="scss">
-@import '../style/card.scss';
-</style>

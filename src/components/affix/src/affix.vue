@@ -156,7 +156,3 @@ defineExpose({
   updateRoot
 })
 </script>
-
-<style lang="scss">
-@import '../style/affix.scss';
-</style>

@@ -1,0 +1,39 @@
+@use 'config' as *;
+
+// joinVarName(('button', 'text-color')) => '--el-button-text-color'
+@function joinVarName($list) {
+  $name: '--' + $namespace; // --el
+  @each $item in $list {
+    @if $item != '' {
+      $name: $name + '-' + $item;
+    }
+  }
+  @return $name;
+}
+
+// getCssVarName('button', 'text-color') => '--el-button-text-color'
+@function getCssVarName($args...) {
+  @return joinVarName($args);
+}
+
+// getCssVar('button', 'text-color') => var(--el-button-text-color)
+// #{} 插值语句可以在选择器或属性名中使用变量
+@function getCssVar($args...) {
+  @return var(#{joinVarName($args)});
+}
+
+// bem('block', 'element', 'modifier') => 'el-block__element--modifier'
+@function bem($block, $element: '', $modifier: '') {
+  $name: $namespace + $common-separator + $block;
+
+  @if $element != '' {
+    $name: $name + $element-separator + $element;
+  }
+
+  @if $modifier != '' {
+    $name: $name + $modifier-separator + $modifier;
+  }
+
+  // @debug $name;
+  @return $name;
+}

@@ -14,6 +14,7 @@ export default defineConfig(() => {
     css: {
       preprocessorOptions: {
         // 导入scss预编译程序
+        /* 加载无效的原因：app.vue里面style 没有加上 lang="scss" */
         scss: {
           additionalData: `@import "./src/theme-chalk/index.scss";`
         }

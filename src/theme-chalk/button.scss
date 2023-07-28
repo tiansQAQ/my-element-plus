@@ -1,0 +1,24 @@
+@use 'sass:map';
+@use './mixins/function.scss' as *;
+
+@include b(button) {
+  @include set-component-css-var('button', $button);
+}
+
+@include b(button) {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1;
+  height: map.get($input-height, 'default');
+  white-space: nowrap;
+  cursor: pointer;
+  color: getCssVar('button', 'text-color');
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  transition: 0.1s;
+  background-color: getCssVar('button', 'bg-color');
+  border: getCssVar('border');
+  border-color: getCssVar('button', 'border-color');
+}

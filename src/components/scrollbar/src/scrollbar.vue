@@ -220,7 +220,4 @@ defineExpose({
 })
 </script>
 
-<style lang="scss">
-@import '../style/scrollbar.scss';
-@import '../../../theme-chalk/common/transition.scss';
-</style>
+<style lang="scss"></style>

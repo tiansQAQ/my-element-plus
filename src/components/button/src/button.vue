@@ -1,13 +1,39 @@
 <template>
-  <component :is="tag">
-    <slot />
+  <component
+    :is="tag"
+    ref="_ref"
+    v-bind="_props"
+    :class="[
+      ns.b(),
+      ns.m(_type),
+      ns.m(_size),
+      ns.is('disabled', _disabled),
+      ns.is('loading', loading),
+      ns.is('plain', plain),
+      ns.is('round', round),
+      ns.is('circle', circle),
+      ns.is('text', text),
+      ns.is('link', link),
+      ns.is('has-bg', bg)
+    ]"
+  >
   </component>
 </template>
 
 <script setup>
 import { Loading } from '@element-plus/icons-vue'
-
+import { useButton } from './use-button'
+import { useNamespace } from '@/hooks'
+import { oneOf } from '@/utils'
+defineOptions({ name: 'ElButton' })
 const props = defineProps({
+  size: {
+    type: String,
+    validator(value) {
+      return oneOf(value, ['large', 'default', 'small'])
+    },
+    default: 'default'
+  },
   // 自定义元素标签 string / Component
   tag: {
     type: [String, Object],
@@ -72,4 +98,8 @@ const props = defineProps({
     default: 'button'
   }
 })
+
+const ns = useNamespace('button')
+
+const { _type, _props, _size } = useButton(props)
 </script>

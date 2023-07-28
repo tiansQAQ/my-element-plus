@@ -1,0 +1,16 @@
+// 比如开发一个库，用户可以选择是否传递自定义的值，如果没有传递则使用默认值。为了实现这一点，Sass 提供了 !default 标志。
+$namespace: 'el' !default; // 命名空间
+
+/*
+
+BEM 命名规范
+
+- 中划线 ：仅作为连字符使用，表示某个块或者某个子元素的多单词之间的连接记号。
+__ 双下划线：用来连接块和块的子元素
+-- 双中划线：用来描述一个块或者块的子元素的一种状态
+*/
+
+$common-separator: '-' !default; // 块修饰符  b() => el-tree
+$element-separator: '__' !default; // 元素修饰符   e('content') => el-tree__content
+$modifier-separator: '--' !default; //修饰符    m('success') => el-button--success
+$state-prefix: 'is-' !default; // 状态前缀

@@ -22,6 +22,3 @@ const style = computed(() => {
   return { fontSize: size === undefined ? undefined : addUnit(size), '--color': color }
 })
 </script>
-<style lang="scss">
-@import '../style/icon.scss';
-</style>
