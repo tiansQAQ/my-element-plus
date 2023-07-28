@@ -1,4 +1,7 @@
 <template>
+  <el-form>
+    <el-form-item> <input /> </el-form-item>
+  </el-form>
   <el-button type="danger">button</el-button>
   <el-card>我我我</el-card>
   <el-icon><Plus /></el-icon>

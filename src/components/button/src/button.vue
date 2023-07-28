@@ -39,7 +39,6 @@
 import { Loading } from '@element-plus/icons-vue'
 import { useButton } from './use-button'
 import { useNamespace } from '@/hooks'
-import { oneOf } from '@/utils'
 defineOptions({ name: 'ElButton' })
 const props = defineProps({
   size: {
