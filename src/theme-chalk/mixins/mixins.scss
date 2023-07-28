@@ -1,3 +1,6 @@
+@use 'sass:math';
+@use 'sass:map';
+// @use 'sass:color';
 @use 'config' as *;
 @use 'function' as *;
 
@@ -246,4 +249,32 @@
   $varName: joinVarName($var);
   $gVarName: joinVarName($gVar);
   #{$varName}: var(#{$gVarName});
+}
+
+// https://sass-lang.com/documentation/values/maps#immutability
+// mix colors with white/black to generate light/dark level
+@mixin set-color-mix-level($type, $number, $mode: 'light', $mix-color: $color-white) {
+  $colors: map.deep-merge(
+    (
+      $type: (
+        '#{$mode}-#{$number}': mix($mix-color, map.get($colors, $type, 'base'), math.percentage(math.div($number, 10)))
+      )
+    ),
+    $colors
+  ) !global;
+}
+
+@mixin set-css-color-rgb($type) {
+  $color: map.get($colors, $type, 'base');
+  @include set-css-var-value(('color', $type, 'rgb'), #{red($color), green($color), blue($color)});
+}
+
+@mixin set-css-color-type($colors, $type) {
+  @include set-css-var-value(('color', $type), map.get($colors, $type, 'base'));
+
+  @each $i in (3, 5, 7, 8, 9) {
+    @include set-css-var-value(('color', $type, 'light', $i), map.get($colors, $type, 'light-#{$i}'));
+  }
+  // TODO
+  // @include set-css-var-value(('color', $type, 'dark-2'), map.get($colors, $type, 'dark-2'));
 }

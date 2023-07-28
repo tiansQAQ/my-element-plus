@@ -16,7 +16,22 @@
       ns.is('link', link),
       ns.is('has-bg', bg)
     ]"
+    @click="handleClick"
   >
+    <template v-if="loading">
+      <slot v-if="$slots.loading" name="loading"></slot>
+      <el-icon v-else :class="ns.is('loading')">
+        <component :is="loadingIcon" />
+      </el-icon>
+    </template>
+    <el-icon v-else-if="icon || $slots.icon">
+      <component :is="icon" v-if="icon" />
+      <slot v-else name="icon" />
+    </el-icon>
+
+    <span v-if="$slots.default">
+      <slot />
+    </span>
   </component>
 </template>
 
@@ -30,7 +45,7 @@ const props = defineProps({
   size: {
     type: String,
     validator(value) {
-      return oneOf(value, ['large', 'default', 'small'])
+      return ['large', 'default', 'small'].includes(value)
     },
     default: 'default'
   },
@@ -45,7 +60,7 @@ const props = defineProps({
   // 类型
   type: {
     validator(value) {
-      return oneOf(value, ['default', 'primary', 'success', 'warning', 'info', 'danger', 'text', ''])
+      return ['default', 'primary', 'success', 'warning', 'info', 'danger', 'text', ''].includes(value)
     },
     default: ''
   },
@@ -57,7 +72,7 @@ const props = defineProps({
   // 原生 type 属性
   nativeType: {
     validator(value) {
-      return oneOf(value, ['button', 'submit', 'reset'])
+      return ['button', 'submit', 'reset'].includes(value)
     },
     default: 'button'
   },
@@ -99,7 +114,18 @@ const props = defineProps({
   }
 })
 
+const emit = defineEmits(['click'])
+
 const ns = useNamespace('button')
 
-const { _type, _props, _size } = useButton(props)
+const { _ref, _type, _props, _size, _disabled, handleClick } = useButton(props, emit)
+
+defineExpose({
+  /** @description button html element */
+  ref: _ref,
+  /** @description button size */
+  size: _size,
+  /** @description button type */
+  type: _type
+})
 </script>
