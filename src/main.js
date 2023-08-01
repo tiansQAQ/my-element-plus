@@ -13,5 +13,5 @@ const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
-app.use(myAffix).use(myCard).use(myScrollbar).use(icon).use(myButton).use(formObj.form).use(formObj.formItem)
+app.use(myAffix).use(myCard).use(myScrollbar).use(icon).use(myButton).use(formObj.myForm).use(formObj.myFormItem)
 app.mount('#app')

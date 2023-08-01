@@ -8,7 +8,7 @@ const exportObj = {}
 Object.keys(obj).forEach((item) => {
   exportObj[item] = {
     install(app, options) {
-      app.component(obj[item])
+      app.component(obj[item].name, obj[item])
     }
   }
 })
