@@ -1,5 +1,8 @@
 import { isClient } from '@vueuse/core'
 import { capitalize as toCapitalize, isString, camelize } from '@vue/shared'
+
+export { isString } from '@vue/shared'
+
 class ElementPlusError extends Error {
   constructor(m) {
     super(m)
@@ -87,4 +90,48 @@ export function getScrollContainer(el, isVertical) {
     parent = parent.parentNode
   }
   return parent
+}
+
+export const castArray = (arr) => {
+  if (!arr && arr !== 0) return []
+  return Array.isArray(arr) ? arr : [arr]
+}
+
+export const ensureArray = castArray
+
+export function debugWarn(scope, message) {
+  if (process.env.NODE_ENV !== 'production') {
+    const error = isString(scope) ? new ElementPlusError(`[${scope}] ${message}`) : scope
+
+    console.warn(error)
+  }
+}
+
+export function getProp(obj, path, strict) {
+  let tempObj = obj
+  // 'a[b]'.replace(/\[(\w+)\]/g, '.$1') => 'a.b'
+  path = path.replace(/\[(\w+)\]/g, '.$1')
+  // 去掉path前面的第一个.
+  path = path.replace(/^\./, '')
+  // ['a', 'b']
+  let keyArr = path.split('.')
+  let i = 0
+  for (let len = keyArr.length; i < len - 1; ++i) {
+    if (!tempObj && !strict) break
+    let key = keyArr[i]
+    if (key in tempObj) {
+      tempObj = tempObj[key]
+    } else {
+      // 如果keyArr的元素不在tempObj里面就会报错
+      if (strict) {
+        throw new Error('please transfer a valid prop path to form item!')
+      }
+      break
+    }
+  }
+  return {
+    o: tempObj,
+    k: keyArr[i],
+    v: tempObj ? tempObj[keyArr[i]] : null
+  }
 }

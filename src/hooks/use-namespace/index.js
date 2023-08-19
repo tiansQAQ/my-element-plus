@@ -1,6 +1,7 @@
 /**
  * CSS BEM
  */
+import { computed, inject, unref, getCurrentInstance, ref } from 'vue'
 
 export const defaultNamespace = 'el'
 const statePrefix = 'is-'
@@ -34,7 +35,7 @@ export const namespaceContextKey = Symbol('namespaceContextKey')
  * @param {*} namespaceOverrides  Ref<string | undefined>
  */
 export const useGetDerivedNamespace = (namespaceOverrides) => {
-  const derivedNamespace = namespaceOverrides || inject(namespaceContextKey, ref(defaultNamespace))
+  const derivedNamespace = namespaceOverrides || (getCurrentInstance() ? inject(namespaceContextKey, ref(defaultNamespace)) : ref(defaultNamespace))
   const namespace = computed(() => {
     return unref(derivedNamespace) || defaultNamespace
   })
